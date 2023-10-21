@@ -2,15 +2,17 @@ package com.berkay.karakaya.deliv.manager.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data
 @AllArgsConstructor
-public class DelivererDTO {
-    private Long id;
+@NoArgsConstructor
+@Data
+public class SearchDeliverersDTO {
     private String firstName;
     private String lastName;
-    private Date creationDate;
-    private boolean isAvailable;
+    private Date createdBefore;
+    private Date createdAfter;
+    private Boolean isAvailable;
 }

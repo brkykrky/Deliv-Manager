@@ -19,5 +19,5 @@ public class Deliverer {
     private String firstName;
     private String lastName;
     private Date creationDate;
-    private boolean isAvaliable;
+    private boolean isAvailable;
 }
