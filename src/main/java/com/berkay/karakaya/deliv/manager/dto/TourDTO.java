@@ -5,14 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
-@Data
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class DelivererDTO {
+public class TourDTO {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private Date creationDate;
-    private boolean isAvailable;
+    private String name;
+    private Date startDate;
+    private Date endDate;
+    private DelivererDTO assignedDeliverer;
+    private List<DeliveryDTO> deliveries;
 }

@@ -13,18 +13,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Deliverer {
+public class DeliveryTour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private Date creationDate;
-    private boolean isAvailable;
+    private String name;
+    private Date startDate;
+    private Date endDate;
 
-    @OneToMany(mappedBy = "assignedDeliverer")
-    private List<DeliveryTour> deliveryTours;
+    @ManyToOne
+    @JoinColumn(name = "deliverer_id", nullable = false)
+    private Deliverer assignedDeliverer;
 
-    @OneToMany(mappedBy = "assignedDeliverer")
+    @OneToMany(mappedBy = "assignedTour")
     private List<Delivery> deliveries;
 }

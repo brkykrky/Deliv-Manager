@@ -5,13 +5,17 @@ import com.berkay.karakaya.deliv.manager.dto.DelivererDTO;
 import com.berkay.karakaya.deliv.manager.dto.SearchDeliverersDTO;
 import com.berkay.karakaya.deliv.manager.dto.UpdateDelivererDTO;
 import com.berkay.karakaya.deliv.manager.entity.Deliverer;
+import com.berkay.karakaya.deliv.manager.entity.Delivery;
+import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
 import com.berkay.karakaya.deliv.manager.exception.DelivererNotExistException;
 import com.berkay.karakaya.deliv.manager.repository.DelivererRepository;
 import jakarta.validation.Validator;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +24,16 @@ import java.util.Optional;
 @Service
 public class DelivererService {
     private final DelivererRepository delivererRepository;
+    private final ModelMapper modelMapper;
     public DelivererDTO create(CreateDelivererDTO dto){
         Deliverer d = new Deliverer(null,dto.getFirstName(),
                 dto.getLastName(),
                 Date.from(Instant.now()),
-                dto.isAvailable());
+                dto.isAvailable(),
+                new ArrayList<>(),
+                new ArrayList<>());
         delivererRepository.save(d);
-        return mapToDTO(d);
+        return modelMapper.map(d,DelivererDTO.class);
     }
 
     public void delete(Long id){
