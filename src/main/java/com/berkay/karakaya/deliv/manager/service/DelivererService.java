@@ -20,10 +20,7 @@ import java.util.Optional;
 @Service
 public class DelivererService {
     private final DelivererRepository delivererRepository;
-    private final Validator validator;
     public DelivererDTO create(CreateDelivererDTO dto){
-        validator.validate(dto);
-
         Deliverer d = new Deliverer(null,dto.getFirstName(),
                 dto.getLastName(),
                 Date.from(Instant.now()),

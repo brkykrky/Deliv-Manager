@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DelivererController {
     private final DelivererService delivererService;
-    @RequestMapping(value = "/",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DelivererDTO> createDeliverer(@RequestBody @Valid CreateDelivererDTO dto){
         return ResponseEntity.ok(delivererService.create(dto));
     }
