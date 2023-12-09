@@ -1,15 +1,13 @@
 package com.berkay.karakaya.deliv.manager.controller;
 
-import com.berkay.karakaya.deliv.manager.dto.CreateDelivererDTO;
-import com.berkay.karakaya.deliv.manager.dto.DelivererDTO;
-import com.berkay.karakaya.deliv.manager.dto.SearchDeliverersDTO;
-import com.berkay.karakaya.deliv.manager.dto.UpdateDelivererDTO;
+import com.berkay.karakaya.deliv.manager.dto.deliverer.CreateDelivererDTO;
+import com.berkay.karakaya.deliv.manager.dto.deliverer.DelivererDTO;
+import com.berkay.karakaya.deliv.manager.dto.deliverer.SearchDeliverersDTO;
+import com.berkay.karakaya.deliv.manager.dto.deliverer.UpdateDelivererDTO;
 import com.berkay.karakaya.deliv.manager.service.DelivererService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DelivererController {
     private final DelivererService delivererService;
-    @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("isAuthenticated()")
+    @PostMapping
     public ResponseEntity<DelivererDTO> createDeliverer(@RequestBody @Valid CreateDelivererDTO dto){
         return ResponseEntity.ok(delivererService.create(dto));
     }
@@ -30,13 +27,18 @@ public class DelivererController {
         delivererService.delete(id);
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.PATCH)
-    public ResponseEntity<DelivererDTO> patchDeliverer(@RequestBody @Valid UpdateDelivererDTO dto){
-        return ResponseEntity.ok(delivererService.update(dto));
+    @PatchMapping("/{id}")
+    public ResponseEntity<DelivererDTO> patchDeliverer(@PathVariable Long id, @RequestBody @Valid UpdateDelivererDTO dto){
+        return ResponseEntity.ok(delivererService.update(id,dto));
     }
 
-    @RequestMapping(value = "/search",method = RequestMethod.GET)
-    public ResponseEntity<List<DelivererDTO>> searchDeliverer(@RequestBody SearchDeliverersDTO dto){
+    @PostMapping("/search")
+    public ResponseEntity<List<DelivererDTO>> searchDeliverer(@RequestBody @Valid SearchDeliverersDTO dto){
         return ResponseEntity.ok(delivererService.serach(dto));
+    }
+
+    @PostMapping("/{id}/assign-tour")
+    public ResponseEntity<DelivererDTO> assignTour(@PathVariable Long id,@RequestParam Long tourId){
+        return ResponseEntity.ok(delivererService.assignTour(id,tourId));
     }
 }

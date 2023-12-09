@@ -1,4 +1,4 @@
-package com.berkay.karakaya.deliv.manager.dto;
+package com.berkay.karakaya.deliv.manager.dto.delivery;
 
 import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
 import jakarta.validation.constraints.NotNull;

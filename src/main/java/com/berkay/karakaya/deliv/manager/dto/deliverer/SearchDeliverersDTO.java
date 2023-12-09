@@ -1,4 +1,4 @@
-package com.berkay.karakaya.deliv.manager.dto;
+package com.berkay.karakaya.deliv.manager.dto.deliverer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

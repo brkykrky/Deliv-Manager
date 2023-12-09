@@ -1,9 +1,7 @@
-package com.berkay.karakaya.deliv.manager.dto;
+package com.berkay.karakaya.deliv.manager.dto.delivery;
 
-import com.berkay.karakaya.deliv.manager.entity.Deliverer;
-import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.berkay.karakaya.deliv.manager.dto.tour.TourDTO;
+import com.berkay.karakaya.deliv.manager.dto.deliverer.DelivererDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

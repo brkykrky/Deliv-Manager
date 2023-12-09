@@ -1,7 +1,9 @@
 package com.berkay.karakaya.deliv.manager.service;
 
-import com.berkay.karakaya.deliv.manager.dto.CreateDeliveryDTO;
-import com.berkay.karakaya.deliv.manager.dto.DeliveryDTO;
+import com.berkay.karakaya.deliv.manager.dto.delivery.CreateDeliveryDTO;
+import com.berkay.karakaya.deliv.manager.dto.delivery.DeliveryDTO;
+import com.berkay.karakaya.deliv.manager.dto.delivery.SearchDeliveryDTO;
+import com.berkay.karakaya.deliv.manager.dto.delivery.UpdateDeliveryDTO;
 import com.berkay.karakaya.deliv.manager.entity.Deliverer;
 import com.berkay.karakaya.deliv.manager.entity.Delivery;
 import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
@@ -10,8 +12,10 @@ import com.berkay.karakaya.deliv.manager.repository.DeliveryRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryTourRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -45,5 +49,72 @@ public class DeliveryService {
         return modelMapper.map(delivery,DeliveryDTO.class);
     }
 
-    //ToDo : get byId, getAll, search, delete, update...
+    public DeliveryDTO get(Long id){
+        Optional<Delivery> delivery = deliveryRepository.findById(id);
+        if(delivery.isEmpty()){
+            //ToDo : throw error
+        }
+        return modelMapper.map(delivery.get(),DeliveryDTO.class);
+    }
+
+    public List<DeliveryDTO> getAll(){
+        return deliveryRepository.findAll().stream()
+                .map(x -> modelMapper.map(x,DeliveryDTO.class)).toList();
+    }
+
+    public void delete(Long id){
+        Optional<Delivery> delivery = deliveryRepository.findById(id);
+        if(delivery.isEmpty()){
+            //ToDo : throw error
+        }
+        deliveryRepository.delete(delivery.get());
+    }
+
+    public List<DeliveryDTO> search(SearchDeliveryDTO dto){
+        List<Delivery> deliveries = deliveryRepository.findAll();
+
+        if(dto.getPickupAddress() != null){
+            deliveries = deliveries.stream().filter(
+                    x -> x.getPickupAddress().toLowerCase().contains(
+                            dto.getPickupAddress().toLowerCase())).toList();
+        }
+        if(dto.getStorageAddress() != null){
+            deliveries = deliveries.stream().filter(
+                    x -> x.getStorageAddress().toLowerCase().contains(
+                            dto.getStorageAddress().toLowerCase())).toList();
+        }
+        if(dto.getTourName() != null){
+            deliveries = deliveries.stream().filter(
+                    x -> x.getAssignedTour() != null && x.getAssignedTour().getName()
+                            .toLowerCase().contains(dto.getTourName().toLowerCase())).toList();
+        }
+
+        if(dto.getPageSize() != null && dto.getPageNumber() != null){
+            PageRequest pageRequest = PageRequest.of(dto.getPageNumber(),dto.getPageSize());
+            int start = (int) pageRequest.getOffset();
+            int end = Math.min((start + pageRequest.getPageSize()), deliveries.size());
+            deliveries = deliveries.subList(start,end);
+        }
+
+        return deliveries.stream().map(x -> modelMapper.map(x,DeliveryDTO.class)).toList();
+    }
+
+    public DeliveryDTO update(Long id, UpdateDeliveryDTO dto){
+        Optional<Delivery> opt = deliveryRepository.findById(id);
+        if(opt.isEmpty()){
+            //ToDo : throw error
+        }
+        Delivery delivery = opt.get();
+
+        if(dto.getPickupAddress() != null){
+            delivery.setPickupAddress(dto.getPickupAddress());
+        }
+        if(dto.getStorageAddress() != null){
+            delivery.setStorageAddress(dto.getStorageAddress());
+        }
+
+        deliveryRepository.save(delivery);
+
+        return modelMapper.map(delivery,DeliveryDTO.class);
+    }
 }

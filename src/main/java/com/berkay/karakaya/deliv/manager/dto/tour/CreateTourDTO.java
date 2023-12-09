@@ -1,4 +1,4 @@
-package com.berkay.karakaya.deliv.manager.dto;
+package com.berkay.karakaya.deliv.manager.dto.tour;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -14,7 +14,7 @@ public class CreateTourDTO {
     private String name;
     private Date startDate;
     private Date endDate;
-    @NotNull
+    @Null
     private Long delivererId;
     @Null
     private List<Long> deliveryIds;

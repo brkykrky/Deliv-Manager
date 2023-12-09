@@ -1,5 +1,7 @@
-package com.berkay.karakaya.deliv.manager.dto;
+package com.berkay.karakaya.deliv.manager.dto.tour;
 
+import com.berkay.karakaya.deliv.manager.dto.deliverer.DelivererDTO;
+import com.berkay.karakaya.deliv.manager.dto.delivery.DeliveryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
