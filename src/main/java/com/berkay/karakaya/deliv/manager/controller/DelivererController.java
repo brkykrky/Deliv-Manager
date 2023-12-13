@@ -4,6 +4,7 @@ import com.berkay.karakaya.deliv.manager.dto.deliverer.CreateDelivererDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.DelivererDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.SearchDeliverersDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.UpdateDelivererDTO;
+import com.berkay.karakaya.deliv.manager.dto.delivery.DeliveryDTO;
 import com.berkay.karakaya.deliv.manager.service.DelivererService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DelivererController {
     private final DelivererService delivererService;
+
     @PostMapping
     public ResponseEntity<DelivererDTO> createDeliverer(@RequestBody @Valid CreateDelivererDTO dto){
         return ResponseEntity.ok(delivererService.create(dto));
@@ -40,5 +42,10 @@ public class DelivererController {
     @PostMapping("/{id}/assign-tour")
     public ResponseEntity<DelivererDTO> assignTour(@PathVariable Long id,@RequestParam Long tourId){
         return ResponseEntity.ok(delivererService.assignTour(id,tourId));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<DelivererDTO>> getAll(){
+        return ResponseEntity.ok(delivererService.getAll());
     }
 }

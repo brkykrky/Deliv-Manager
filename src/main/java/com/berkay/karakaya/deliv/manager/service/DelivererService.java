@@ -4,6 +4,7 @@ import com.berkay.karakaya.deliv.manager.dto.deliverer.CreateDelivererDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.DelivererDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.SearchDeliverersDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.UpdateDelivererDTO;
+import com.berkay.karakaya.deliv.manager.dto.delivery.DeliveryDTO;
 import com.berkay.karakaya.deliv.manager.entity.Deliverer;
 import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
 import com.berkay.karakaya.deliv.manager.exception.DelivererIsOccupiedException;
@@ -27,6 +28,7 @@ public class DelivererService {
     private final DelivererRepository delivererRepository;
     private final DeliveryTourRepository deliveryTourRepository;
     private final ModelMapper modelMapper;
+
     public DelivererDTO create(CreateDelivererDTO dto){
         Deliverer d = new Deliverer(null,dto.getFirstName(),
                 dto.getLastName(),
@@ -36,6 +38,11 @@ public class DelivererService {
                 new ArrayList<>());
         delivererRepository.save(d);
         return modelMapper.map(d,DelivererDTO.class);
+    }
+
+    public List<DelivererDTO> getAll(){
+        return delivererRepository.findAll().stream()
+                .map(x -> modelMapper.map(x,DelivererDTO.class)).toList();
     }
 
     public void delete(Long id){
