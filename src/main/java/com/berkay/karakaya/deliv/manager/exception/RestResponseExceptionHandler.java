@@ -10,8 +10,8 @@ import java.util.Map;
 
 @ControllerAdvice
 public class RestResponseExceptionHandler {
-    @ExceptionHandler(DelivererNotExistException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(DelivererNotExistException ex) {
+    @ExceptionHandler(DelivererNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(DelivererNotFoundException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);

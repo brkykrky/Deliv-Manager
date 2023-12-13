@@ -4,10 +4,11 @@ import com.berkay.karakaya.deliv.manager.dto.deliverer.CreateDelivererDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.DelivererDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.SearchDeliverersDTO;
 import com.berkay.karakaya.deliv.manager.dto.deliverer.UpdateDelivererDTO;
-import com.berkay.karakaya.deliv.manager.dto.delivery.DeliveryDTO;
 import com.berkay.karakaya.deliv.manager.entity.Deliverer;
 import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
-import com.berkay.karakaya.deliv.manager.exception.DelivererNotExistException;
+import com.berkay.karakaya.deliv.manager.exception.DelivererIsOccupiedException;
+import com.berkay.karakaya.deliv.manager.exception.DelivererNotFoundException;
+import com.berkay.karakaya.deliv.manager.exception.DeliveryTourNotFoundException;
 import com.berkay.karakaya.deliv.manager.repository.DelivererRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryTourRepository;
 import lombok.AllArgsConstructor;
@@ -47,7 +48,7 @@ public class DelivererService {
     public DelivererDTO update(Long id, UpdateDelivererDTO dto){
         Optional<Deliverer> optDeliverer = delivererRepository.findById(id);
         if(optDeliverer.isEmpty())
-            throw new DelivererNotExistException();
+            throw new DelivererNotFoundException();
 
         Deliverer deliverer = optDeliverer.get();
 
@@ -94,22 +95,23 @@ public class DelivererService {
     public DelivererDTO assignTour(Long id, Long tourId){
         Optional<Deliverer> delivererOpt = delivererRepository.findById(id);
         if(delivererOpt.isEmpty()){
-            //ToDo : throw error
+            throw new DelivererNotFoundException();
         }
 
         Optional<DeliveryTour> tourOpt = deliveryTourRepository.findById(tourId);
         if(tourOpt.isEmpty()){
-            //ToDo : throw error
+            throw new DeliveryTourNotFoundException();
         }
 
         if(tourOpt.get().getAssignedDeliverer() != null){
             //ToDo : throw error (tour already has deliverer)
+            //ToDo : ask if we change the assigned deliverer in this case ?
         }
 
         for(DeliveryTour tour : delivererOpt.get().getDeliveryTours()){
             if(tourOpt.get().getStartDate().before(tour.getEndDate()) ||
                 tourOpt.get().getEndDate().after(tour.getStartDate())){
-                //ToDo : throw error (tour conflicts with another tour date)
+                throw new DelivererIsOccupiedException();
             }
         }
 

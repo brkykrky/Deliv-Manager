@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-public class UpdateTourDTO {
-    private String name;
-    private Date startDate;
-    private Date endDate;
+public class SearchTourByDateDTO {
+    private Date after;
+    private Date before;
 }

@@ -7,12 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class SearchTourDTO {
-    @Null
     private String name;
-    @Null
     private Integer deliveryNumber;
-    @Null
     private Integer pageNumber;
-    @Null
     private Integer pageSize;
 }

@@ -14,8 +14,6 @@ public class CreateTourDTO {
     private String name;
     private Date startDate;
     private Date endDate;
-    @Null
     private Long delivererId;
-    @Null
     private List<Long> deliveryIds;
 }

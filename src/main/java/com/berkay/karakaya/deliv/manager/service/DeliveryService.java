@@ -7,6 +7,9 @@ import com.berkay.karakaya.deliv.manager.dto.delivery.UpdateDeliveryDTO;
 import com.berkay.karakaya.deliv.manager.entity.Deliverer;
 import com.berkay.karakaya.deliv.manager.entity.Delivery;
 import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
+import com.berkay.karakaya.deliv.manager.exception.DelivererNotFoundException;
+import com.berkay.karakaya.deliv.manager.exception.DeliveryNotFoundException;
+import com.berkay.karakaya.deliv.manager.exception.DeliveryTourNotFoundException;
 import com.berkay.karakaya.deliv.manager.repository.DelivererRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryTourRepository;
@@ -29,14 +32,14 @@ public class DeliveryService {
         Delivery delivery = new Delivery();
         Optional<Deliverer> deliverer = delivererRepository.findById(dto.getDelivererId());
         if(deliverer.isEmpty()){
-            //ToDo : throw error
+            throw new DelivererNotFoundException();
         }
         delivery.setAssignedDeliverer(deliverer.get());
 
         if(dto.getTourId() != null){
             Optional<DeliveryTour> tour = tourRepository.findById(dto.getTourId());
             if(tour.isEmpty()){
-                //ToDo : throw error
+                throw new DeliveryTourNotFoundException();
             }
             delivery.setAssignedTour(tour.get());
         }
@@ -52,7 +55,7 @@ public class DeliveryService {
     public DeliveryDTO get(Long id){
         Optional<Delivery> delivery = deliveryRepository.findById(id);
         if(delivery.isEmpty()){
-            //ToDo : throw error
+            throw new DeliveryNotFoundException();
         }
         return modelMapper.map(delivery.get(),DeliveryDTO.class);
     }
@@ -65,7 +68,7 @@ public class DeliveryService {
     public void delete(Long id){
         Optional<Delivery> delivery = deliveryRepository.findById(id);
         if(delivery.isEmpty()){
-            //ToDo : throw error
+            throw new DeliveryNotFoundException();
         }
         deliveryRepository.delete(delivery.get());
     }
@@ -102,7 +105,7 @@ public class DeliveryService {
     public DeliveryDTO update(Long id, UpdateDeliveryDTO dto){
         Optional<Delivery> opt = deliveryRepository.findById(id);
         if(opt.isEmpty()){
-            //ToDo : throw error
+            throw new DeliveryNotFoundException();
         }
         Delivery delivery = opt.get();
 

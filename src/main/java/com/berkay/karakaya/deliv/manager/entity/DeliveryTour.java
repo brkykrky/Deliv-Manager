@@ -22,7 +22,7 @@ public class DeliveryTour {
     private Date endDate;
 
     @ManyToOne
-    @JoinColumn(name = "deliverer_id", nullable = false)
+    @JoinColumn(name = "deliverer_id")
     private Deliverer assignedDeliverer;
 
     @OneToMany(mappedBy = "assignedTour")

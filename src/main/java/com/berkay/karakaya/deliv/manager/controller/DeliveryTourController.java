@@ -44,4 +44,9 @@ public class DeliveryTourController {
     public ResponseEntity<TourDTO> assignDelivery(@PathVariable Long id,@RequestBody @Valid AddDeliveryDTO dto){
         return ResponseEntity.ok(deliveryTourService.assignDelivery(id,dto));
     }
+
+    @PostMapping("/search-by-date")
+    public ResponseEntity<List<TourDTO>> seachByDate(@RequestBody @Valid SearchTourByDateDTO dto){
+        return ResponseEntity.ok(deliveryTourService.searchByDate(dto));
+    }
 }

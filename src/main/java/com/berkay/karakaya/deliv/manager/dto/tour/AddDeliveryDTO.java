@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class AddDeliveryDTO {
-    @NotNull
+    @NotNull(message = "deliveryIds.required")
     private List<Long> deliveryIds;
 }

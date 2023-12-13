@@ -4,6 +4,9 @@ import com.berkay.karakaya.deliv.manager.dto.tour.*;
 import com.berkay.karakaya.deliv.manager.entity.Deliverer;
 import com.berkay.karakaya.deliv.manager.entity.Delivery;
 import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
+import com.berkay.karakaya.deliv.manager.exception.DelivererNotFoundException;
+import com.berkay.karakaya.deliv.manager.exception.DeliveryAlreadyAssignedException;
+import com.berkay.karakaya.deliv.manager.exception.DeliveryNotFoundException;
 import com.berkay.karakaya.deliv.manager.repository.DelivererRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryTourRepository;
@@ -33,7 +36,7 @@ public class DeliveryTourService {
         if(dto.getDelivererId() != null){
             Optional<Deliverer> opt = delivererRepository.findById(dto.getDelivererId());
             if(opt.isEmpty()){
-                //ToDo : throw error
+                throw new DelivererNotFoundException();
             }
             tour.setAssignedDeliverer(opt.get());
         }
@@ -42,13 +45,14 @@ public class DeliveryTourService {
             List<Delivery> deliveries = dto.getDeliveryIds().stream().map(x -> {
                 Optional<Delivery> opt = deliveryRepository.findById(x);
                 if(opt.isEmpty()){
-                    //ToDo : throw error
+                    throw new DelivererNotFoundException();
                 }
                 return opt.get();
             }).toList();
             tour.setDeliveries(deliveries);
         }
 
+        System.out.println("HEREEE");
         deliveryTourRepository.save(tour);
         return modelMapper.map(tour,TourDTO.class);
     }
@@ -56,7 +60,7 @@ public class DeliveryTourService {
     public TourDTO get(Long id){
         Optional<DeliveryTour> opt = deliveryTourRepository.findById(id);
         if(opt.isEmpty()){
-            //ToDo : throw error
+            throw new DeliveryNotFoundException();
         }
         return modelMapper.map(opt.get(),TourDTO.class);
     }
@@ -69,7 +73,7 @@ public class DeliveryTourService {
     public TourDTO update(Long id, UpdateTourDTO dto){
         Optional<DeliveryTour> opt = deliveryTourRepository.findById(id);
         if(opt.isEmpty()){
-            //ToDo : throw error
+            throw new DeliveryNotFoundException();
         }
 
         DeliveryTour tour = opt.get();
@@ -114,16 +118,16 @@ public class DeliveryTourService {
         Optional<DeliveryTour> opt = deliveryTourRepository.findById(id);
 
         if(opt.isEmpty()){
-            //ToDo : throw error
+            throw new DeliveryNotFoundException();
         }
 
         dto.getDeliveryIds().forEach(x -> {
            Optional<Delivery> deliv = deliveryRepository.findById(x);
            if(deliv.isEmpty()){
-               //ToDo : throw error
+               throw new DeliveryNotFoundException();
            }
            if(opt.get().getDeliveries().contains(deliv.get())){
-               //ToDo : throw error (already contains)
+               throw new DeliveryAlreadyAssignedException();
            }
 
            deliv.get().setAssignedTour(opt.get());
@@ -133,5 +137,15 @@ public class DeliveryTourService {
         return modelMapper.map(opt.get(), TourDTO.class);
     }
 
-    //ToDo : Le système permet de rechercher une tournée en fonction d’une date précise.
+    public List<TourDTO> searchByDate(SearchTourByDateDTO dto){
+        List<DeliveryTour> tours = deliveryTourRepository.findAll();
+        if(dto.getAfter() != null){
+            tours = tours.stream().filter(x -> x.getStartDate().after(dto.getAfter())).toList();
+        }
+        if(dto.getBefore() != null){
+            tours = tours.stream().filter(x -> x.getEndDate().before(dto.getBefore())).toList();
+        }
+
+        return tours.stream().map(x -> modelMapper.map(x, TourDTO.class)).toList();
+    }
 }
