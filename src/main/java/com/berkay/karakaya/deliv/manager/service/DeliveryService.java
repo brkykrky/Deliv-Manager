@@ -28,6 +28,7 @@ public class DeliveryService {
   private final DeliveryTourRepository tourRepository;
   private final ModelMapper modelMapper;
 
+  //Create a delivery
   public DeliveryDTO create(CreateDeliveryDTO dto) {
     Delivery delivery = new Delivery();
     Optional<Deliverer> deliverer = delivererRepository.findById(dto.getDelivererId());
