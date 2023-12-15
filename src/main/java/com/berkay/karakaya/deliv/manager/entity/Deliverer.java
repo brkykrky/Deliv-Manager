@@ -24,7 +24,4 @@ public class Deliverer {
 
   @OneToMany(mappedBy = "assignedDeliverer")
   private List<DeliveryTour> deliveryTours;
-
-  @OneToMany(mappedBy = "assignedDeliverer")
-  private List<Delivery> deliveries;
 }

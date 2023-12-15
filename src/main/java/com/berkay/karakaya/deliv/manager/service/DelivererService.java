@@ -35,7 +35,6 @@ public class DelivererService {
             dto.getLastName(),
             Date.from(Instant.now()),
             dto.isAvailable(),
-            new ArrayList<>(),
             new ArrayList<>());
     delivererRepository.save(d);
     return modelMapper.map(d, DelivererDTO.class);
@@ -49,7 +48,9 @@ public class DelivererService {
 
   public void delete(Long id) {
     Optional<Deliverer> deliverer = delivererRepository.findById(id);
-    if (deliverer.isEmpty()) return;
+    if (deliverer.isEmpty()){
+      throw new DelivererNotFoundException();
+    }
     delivererRepository.delete(deliverer.get());
   }
 
@@ -74,7 +75,7 @@ public class DelivererService {
     return modelMapper.map(deliverer, DelivererDTO.class);
   }
 
-  public List<DelivererDTO> serach(SearchDeliverersDTO dto) {
+  public List<DelivererDTO> search(SearchDeliverersDTO dto) {
     List<Deliverer> deliverers = delivererRepository.findAll();
     if (dto.getFirstName() != null) {
       deliverers =
@@ -118,11 +119,6 @@ public class DelivererService {
     Optional<DeliveryTour> tourOpt = deliveryTourRepository.findById(tourId);
     if (tourOpt.isEmpty()) {
       throw new DeliveryTourNotFoundException();
-    }
-
-    if (tourOpt.get().getAssignedDeliverer() != null) {
-      // ToDo : throw error (tour already has deliverer)
-      // ToDo : ask if we change the assigned deliverer in this case ?
     }
 
     for (DeliveryTour tour : delivererOpt.get().getDeliveryTours()) {

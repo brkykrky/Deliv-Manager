@@ -31,12 +31,6 @@ public class DeliveryService {
   // Create a delivery
   public DeliveryDTO create(CreateDeliveryDTO dto) {
     Delivery delivery = new Delivery();
-    Optional<Deliverer> deliverer = delivererRepository.findById(dto.getDelivererId());
-    if (deliverer.isEmpty()) {
-      throw new DelivererNotFoundException();
-    }
-    delivery.setAssignedDeliverer(deliverer.get());
-
     if (dto.getTourId() != null) {
       Optional<DeliveryTour> tour = tourRepository.findById(dto.getTourId());
       if (tour.isEmpty()) {

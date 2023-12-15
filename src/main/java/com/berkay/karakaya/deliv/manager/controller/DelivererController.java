@@ -36,7 +36,7 @@ public class DelivererController {
   @PostMapping("/search")
   public ResponseEntity<List<DelivererDTO>> searchDeliverer(
       @RequestBody @Valid SearchDeliverersDTO dto) {
-    return ResponseEntity.ok(delivererService.serach(dto));
+    return ResponseEntity.ok(delivererService.search(dto));
   }
 
   @PostMapping("/{id}/assign-tour")

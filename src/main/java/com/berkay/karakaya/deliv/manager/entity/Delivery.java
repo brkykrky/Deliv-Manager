@@ -19,10 +19,6 @@ public class Delivery {
   private String storageAddress;
 
   @ManyToOne
-  @JoinColumn(name = "deliverer_id", nullable = false)
-  private Deliverer assignedDeliverer;
-
-  @ManyToOne
   @JoinColumn(name = "tour_id")
   private DeliveryTour assignedTour;
 }

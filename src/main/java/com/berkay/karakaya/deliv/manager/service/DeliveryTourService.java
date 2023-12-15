@@ -7,6 +7,7 @@ import com.berkay.karakaya.deliv.manager.entity.DeliveryTour;
 import com.berkay.karakaya.deliv.manager.exception.DelivererNotFoundException;
 import com.berkay.karakaya.deliv.manager.exception.DeliveryAlreadyAssignedException;
 import com.berkay.karakaya.deliv.manager.exception.DeliveryNotFoundException;
+import com.berkay.karakaya.deliv.manager.exception.DeliveryTourNotFoundException;
 import com.berkay.karakaya.deliv.manager.repository.DelivererRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryRepository;
 import com.berkay.karakaya.deliv.manager.repository.DeliveryTourRepository;
@@ -55,7 +56,6 @@ public class DeliveryTourService {
       tour.setDeliveries(deliveries);
     }
 
-    System.out.println("HEREEE");
     deliveryTourRepository.save(tour);
     return modelMapper.map(tour, TourDTO.class);
   }
@@ -124,7 +124,7 @@ public class DeliveryTourService {
     Optional<DeliveryTour> opt = deliveryTourRepository.findById(id);
 
     if (opt.isEmpty()) {
-      throw new DeliveryNotFoundException();
+      throw new DeliveryTourNotFoundException();
     }
 
     dto.getDeliveryIds()

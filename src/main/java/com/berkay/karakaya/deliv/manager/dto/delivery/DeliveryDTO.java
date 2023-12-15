@@ -13,6 +13,5 @@ public class DeliveryDTO {
   private Long id;
   private String pickupAddress;
   private String storageAddress;
-  private DelivererDTO deliverer;
   private TourDTO deliveryTour;
 }

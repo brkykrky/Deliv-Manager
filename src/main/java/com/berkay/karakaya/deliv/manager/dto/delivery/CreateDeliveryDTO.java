@@ -16,6 +16,5 @@ public class CreateDeliveryDTO {
   @Size(message = "pickup.size", min = 2, max = 64)
   private String storageAddress;
 
-  @NotNull private Long delivererId;
   private Long tourId;
 }
