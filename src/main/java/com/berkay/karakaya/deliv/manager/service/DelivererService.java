@@ -48,7 +48,7 @@ public class DelivererService {
 
   public void delete(Long id) {
     Optional<Deliverer> deliverer = delivererRepository.findById(id);
-    if (deliverer.isEmpty()){
+    if (deliverer.isEmpty()) {
       throw new DelivererNotFoundException();
     }
     delivererRepository.delete(deliverer.get());
