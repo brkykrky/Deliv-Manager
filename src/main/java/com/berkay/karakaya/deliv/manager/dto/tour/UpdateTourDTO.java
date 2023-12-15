@@ -1,17 +1,15 @@
 package com.berkay.karakaya.deliv.manager.dto.tour;
 
-import jakarta.validation.constraints.Null;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
 public class UpdateTourDTO {
-    private String name;
-    private Date startDate;
-    private Date endDate;
+  private String name;
+  private Date startDate;
+  private Date endDate;
 }

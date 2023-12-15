@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UpdateDeliveryDTO {
-    private String pickupAddress;
-    private String storageAddress;
+  private String pickupAddress;
+  private String storageAddress;
 }

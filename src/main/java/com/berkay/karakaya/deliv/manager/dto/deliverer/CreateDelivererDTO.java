@@ -8,14 +8,14 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class CreateDelivererDTO {
-    @NotNull(message = "firstName.required")
-    @Size(message = "firstName.size",min = 2,max = 32)
-    private String firstName;
+  @NotNull(message = "firstName.required")
+  @Size(message = "firstName.size", min = 2, max = 32)
+  private String firstName;
 
-    @NotNull(message = "lastName.required")
-    @Size(message = "lastName.size",min = 2,max = 32)
-    private String lastName;
+  @NotNull(message = "lastName.required")
+  @Size(message = "lastName.size", min = 2, max = 32)
+  private String lastName;
 
-    @NotNull(message = "isAvailable.required")
-    private boolean isAvailable;
+  @NotNull(message = "isAvailable.required")
+  private boolean isAvailable;
 }

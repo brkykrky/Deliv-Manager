@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class SearchDeliveryDTO {
-    private String pickupAddress;
-    private String storageAddress;
-    private String tourName;
-    private Integer pageNumber;
-    private Integer pageSize;
+  private String pickupAddress;
+  private String storageAddress;
+  private String tourName;
+  private Integer pageNumber;
+  private Integer pageSize;
 }
