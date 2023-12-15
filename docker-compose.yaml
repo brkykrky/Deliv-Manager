@@ -3,6 +3,7 @@ services:
   postgres:
     container_name: postgres
     image: "postgres:15"
+
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
       timeout: 45s
@@ -10,10 +11,11 @@ services:
       retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: keycloak
+      POSTGRES_MULTIPLE_DATABASES: keycloak,delivmanager
     networks:
       - keycloak-network
       - local
