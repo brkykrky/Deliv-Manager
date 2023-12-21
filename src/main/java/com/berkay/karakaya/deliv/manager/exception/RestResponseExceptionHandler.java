@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class RestResponseExceptionHandler {
-  @ExceptionHandler(DelivererNotFoundException.class)
-  public ResponseEntity<Object> handleResourceNotFoundException(DelivererNotFoundException ex) {
+  @ExceptionHandler(CustomException.class)
+  public ResponseEntity<Object> handleResourceNotFoundException(CustomException ex) {
     Map<String, Object> body = new HashMap<>();
     body.put("message", ex.getMessage());
-    return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(body, ex.getStatusCode());
   }
 }
