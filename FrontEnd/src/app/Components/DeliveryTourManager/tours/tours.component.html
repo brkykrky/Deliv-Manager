@@ -1,0 +1,76 @@
+<div class="container">
+    
+
+  
+
+
+
+    <mat-form-field class="search-bar">
+      <mat-label>Chercher</mat-label>
+      <div class="search-container">
+        <input matInput (keyup)="applyFilter($event)"  matInput [matDatepicker]="picker" placeholder="Ex. Tournée X ..." #input>
+        <mat-datepicker-toggle matSuffix [for]="picker" matTooltip="Filtrer par date" ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+    </mat-form-field>
+    <div class="mat-elevation-z10">
+  <table mat-table [dataSource]="dataSource" matSort >
+  
+  <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+  
+    <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="startDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de début </th>
+    <td mat-cell *matCellDef="let element"> {{element.startDate | date}} </td>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="endDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date de fin </th>
+    <td mat-cell *matCellDef="let element"> {{ element.endDate | date}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="assignedDeliveries">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Livraisons Assignées </th>
+    <td mat-cell *matCellDef="let element"> {{ element.assignedDeliveries}} </td>
+  </ng-container> 
+
+  <!-- Action Column -->
+  <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element ; let i = id" style="text-align: right;"> 
+      <a class="pointer"  (click)="modifiertournee()" >
+          <mat-icon style="color: #1878b0;" matTooltip="Editer une tournée">edit</mat-icon>
+      </a>
+     
+      <a class="pointer" (click)="confirmSuppressionDialog(i)">
+          <mat-icon style="color: #e15639;" matTooltip="supprimer une tournée"> delete_foreve</mat-icon>
+      </a>
+  
+      <a class="pointer">
+          <mat-icon color="primary"  (click)="Detailtournee()" matTooltip="Détails d'une tournée">remove_red_eye</mat-icon>
+      </a>
+      
+      </td>
+    </ng-container>
+  
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+  
+  </div>
+  
+  
+  

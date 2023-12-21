@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Filtrer un livreur Par</h2>
+
+<mat-dialog-content>
+  <div class="form-container">
+    <mat-slide-toggle [(ngModel)]="isChecked">Statut : {{isChecked ? 'Disponible' : 'Pas Disponible'}}</mat-slide-toggle>
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="beforeDatepicker" placeholder="Avant ..." >
+      <mat-datepicker-toggle matSuffix [for]="beforeDatepicker" matTooltip="Avant cette date!"></mat-datepicker-toggle>
+      <mat-datepicker #beforeDatepicker></mat-datepicker>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="afterDatepicker" placeholder="Après ..." >
+      <mat-datepicker-toggle matSuffix [for]="afterDatepicker" matTooltip="Après cette date!"></mat-datepicker-toggle>
+      <mat-datepicker #afterDatepicker></mat-datepicker>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>Entre deux dates</mat-label>
+      <mat-date-range-input  [rangePicker]="dateRangePicker">
+        <input matStartDate formControlName="start" placeholder="Date de début">
+        <input matEndDate formControlName="end" placeholder="Date de fin">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="dateRangePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
+
+      <!--mat-error *ngIf="dateRangeFormGroup.hasError('matStartDateInvalid')">Date de début invalide</mat-error>
+      <mat-error *ngIf="dateRangeFormGroup.hasError('matEndDateInvalid')">Date de fin invalide</mat-error-->
+    </mat-form-field>
+
+    <!--p>Date avant: {{ beforeDate | json }}</p>
+    <p>Date après: {{ afterDate | json }}</p>
+    <p>Période sélectionnée: {{ dateRangeFormGroup.value | json }}</p-->
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">Annuler</button>
+  <button mat-button color="primary" >Valider</button>
+</mat-dialog-actions>

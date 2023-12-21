@@ -1,0 +1,67 @@
+<div class="container">
+    
+  <mat-form-field class="search-bar">
+    <mat-label>Chercher</mat-label>
+    <div class="search-container">
+      <input matInput (keyup)="applyFilter($event)"  placeholder="Ex. Livaraison X ..." #input>
+
+    </div>
+  </mat-form-field>
+
+<div class="mat-elevation-z10">
+<table mat-table [dataSource]="dataSource" matSort >
+
+
+<ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="pickupAddress">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Adresse de ramassage </th>
+  <td mat-cell *matCellDef="let element"> {{element.pickupAddress}} </td>
+</ng-container>
+
+
+<ng-container matColumnDef="storageAddress">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Adresse de dépôt </th>
+  <td mat-cell *matCellDef="let element"> {{element.storageAddress}} </td>
+</ng-container>
+
+
+<ng-container matColumnDef="assignedTour">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Tournée </th>
+  <td mat-cell *matCellDef="let element"> {{ element.assignedTour}} </td>
+</ng-container>
+
+
+<!-- Action Column -->
+<ng-container matColumnDef="Actions">
+    <th mat-header-cell *matHeaderCellDef>  </th>
+    <td mat-cell *matCellDef="let element ; let i = id" style="text-align: right;"> 
+    <a class="pointer"  (click)="modifierlivraison()" >
+        <mat-icon style="color: #1878b0;" matTooltip="Editer une livraison">edit</mat-icon>
+    </a>
+   
+    <a class="pointer" (click)="confirmSuppressionDialog(i)">
+        <mat-icon style="color: #e15639;" matTooltip="supprimer une livraison"> delete_foreve</mat-icon>
+    </a>
+
+    <a class="pointer">
+        <mat-icon color="primary"  (click)="Detaillivraison()" matTooltip="Détails d'une livraison">remove_red_eye</mat-icon>
+    </a>
+    
+    </td>
+  </ng-container>
+
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+
+</div>
+
+

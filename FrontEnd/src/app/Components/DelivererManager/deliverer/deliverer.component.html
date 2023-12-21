@@ -1,0 +1,78 @@
+<div class="container">
+    
+     
+  <mat-form-field class="search-bar">
+    <mat-label>Chercher</mat-label>
+    <div class="search-container">
+      <input matInput (keyup)="applyFilter($event)"  matInput [matDatepicker]="picker" placeholder="Ex. Livreur X ..." #input>
+      <mat-datepicker-toggle matSuffix [for]="picker" matTooltip="Filtrer par date" ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+  </mat-form-field>
+    
+
+<div class="mat-elevation-z10">
+  <table mat-table [dataSource]="dataSource" matSort >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="creationDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date De Création </th>
+      <td mat-cell *matCellDef="let element"> {{ element.creationDate| date }} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="isAvailable">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.isAvailable ? 'Oui' : 'Non'}} </td>
+    </ng-container>
+  
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element ; let i = id" style="text-align: right;"> 
+        <a class="pointer"  (click)="modifierLivreur()" >
+            <mat-icon style="color: #1878b0;" matTooltip="Editer un livreur">edit</mat-icon>
+        </a>
+       
+        <a class="pointer" (click)="confirmSuppressionDialog(i)">
+            <mat-icon style="color: #e15639;" matTooltip="supprimer un livreur"> delete_foreve</mat-icon>
+        </a>
+
+        <a class="pointer">
+            <mat-icon color="primary"  (click)="DetailLivreur()" matTooltip="Détails d'un livreur">remove_red_eye</mat-icon>
+        </a>
+        
+        </td>
+      </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+
+</div>
+
+  

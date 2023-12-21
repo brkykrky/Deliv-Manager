@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+
+    <button mat-button routerLink="/home"> <img src="assets/images/liv.png" height="20" width="20">
+      Livreurs</button>
+    <button mat-button routerLink="/deliveries"><img src="assets/images/livr.png" height="20" width="20">Livraisons</button>
+    <button mat-button routerLink="/deliveriesTour"><img src="assets/images/tour.png" height="20" width="20">Tournées</button>
+
+    <span class="example-spacer"></span>
+    <button mat-icon-button    *ngIf="isHomeRoute()"  matTooltip="Ajouter un Livreur" class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="OpenDialogLivreur()">
+      <mat-icon  >my_library_add</mat-icon>
+    </button>
+
+    <button mat-icon-button    *ngIf="isDRoute()"  matTooltip="Ajouter une Livraison" class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="OpenDialogLivraison()">
+      <mat-icon  >my_library_add</mat-icon>
+    </button>
+    
+    <button mat-icon-button    *ngIf="isDTRoute()"  matTooltip="Ajouter une tournée" class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="OpenDialogTournee()">
+      <mat-icon  >my_library_add</mat-icon>
+    </button>
+    <button mat-icon-button   *ngIf="isHomeRoute()"  class="example-icon" matTooltip="Filtrer" aria-label="Example icon-button with share icon" (click)="filtrerUnLivreur()">
+      <mat-icon >filter_list</mat-icon>
+    </button>
+
+  </mat-toolbar>
+  
