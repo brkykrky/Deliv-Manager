@@ -1,6 +1,5 @@
 package com.berkay.karakaya.deliv.manager.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
