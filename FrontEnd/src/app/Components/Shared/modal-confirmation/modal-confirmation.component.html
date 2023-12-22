@@ -8,5 +8,9 @@
   
   <div mat-dialog-actions  align="end">
     <button mat-button (click)="onDismiss()">Annuler</button>
-    <button mat-raised-button color="primary" (click)="onConfirm()">Confirmer</button>
+    
+    <button mat-raised-button color="primary" *ngIf="isHomeRoute()" (click)="onConfirmDeliverer()">Confirmer</button>
+    <button mat-raised-button color="primary" *ngIf="isDRoute()" (click)="onConfirmDelivery()">Confirmer</button>
+    <button mat-raised-button color="primary" *ngIf="isDTRoute()" (click)="onConfirmTour()">Confirmer</button>
+
   </div>

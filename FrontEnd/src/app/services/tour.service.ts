@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class DeliveryTourService {
+ 
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +20,12 @@ export class DeliveryTourService {
       );
   }
 
+  deleteTour(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/delivery-tour/${id}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+      }
   gettour(id: number): Observable<tour> {
     return this.http.get<tour>(`${environment.apiUrl}/delivery-tour/${id}`)
       .pipe(
