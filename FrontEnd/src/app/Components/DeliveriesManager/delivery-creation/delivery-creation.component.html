@@ -3,16 +3,16 @@
     <div class="form-container">
       <mat-form-field class="form-field">
         <mat-label>Adresse de ramassage </mat-label>
-        <input matInput type="text" placeholder="Entrer l'adresse de ramassage" [(ngModel)]="value">
-        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
+        <input matInput type="text" placeholder="Entrer l'adresse de ramassage" [(ngModel)]="ramassage">
+        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="ramassage" (click)="ramassage=''">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
   
       <mat-form-field class="form-field">
         <mat-label>Adresse de dépot </mat-label>
-        <input matInput type="text" placeholder="Entrer l'adresse de dépot" [(ngModel)]="value">
-        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
+        <input matInput type="text" placeholder="Entrer l'adresse de dépot" [(ngModel)]="depot">
+        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="depot" (click)="depot=''">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
@@ -22,7 +22,5 @@
   
     <mat-dialog-actions align="end">
       <button mat-button [mat-dialog-close]="false">Annuler</button>
-      <button mat-button color="primary" >Valider</button>
+      <button mat-button color="primary" (click)="onSubmit()" >Valider</button>
     </mat-dialog-actions>
-
-    <!--(click)="onSubmit(queryNameInput.value)"-->
