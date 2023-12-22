@@ -2,28 +2,18 @@
 
 This project is a delivery management application made in Java/SpringBoot and Angular.
 
-## Development server
+## Docker
 
-Run `npm install` to install the packages. 
+The project is fully dockerized. In order to launch all serivec run the command `docker-compose up -d` or if you want to run a specific service run the command `docker-compose up <service_name>`.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Backend
 
-## Code scaffolding
+Backend application is an API spring boot which is accesible at the url `http://localhost:8080`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Keycloak
 
-## Build
+The application uses a keycloak server to authenticate and authorize users. The interface of the keycloak service is accessible at the url `http://localhost:8081`. Default admin username is `admin` and the password is also `admin`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Frontend
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The frontend of the application is made with Angular. It is accessible by the address `http://localhost:4200`
