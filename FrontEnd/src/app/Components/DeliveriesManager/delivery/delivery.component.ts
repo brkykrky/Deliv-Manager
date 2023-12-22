@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,6 +7,8 @@ import { DetailsLivreurComponent } from '../../DelivererManager/details-livreur/
 import { EditerDialogModel, EditerLivreurComponent } from '../../DelivererManager/editer-livreur/editer-livreur.component';
 import { ConfirmDialogModel, ModalConfirmationComponent } from '../../Shared/modal-confirmation/modal-confirmation.component';
 import { delivery } from '../../../Interfaces/delivery';
+import { deliveryService } from '../../../services/delivery.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -16,9 +18,13 @@ import { delivery } from '../../../Interfaces/delivery';
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.css'
 })
-export class DeliveryComponent {
+export class DeliveryComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+
+  
+  constructor(public dialog: MatDialog, public serviceDelivery : deliveryService) {}
 
   ELEMENT_DATA: delivery[] = []
 
@@ -26,6 +32,28 @@ export class DeliveryComponent {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+  ngOnInit(): void {
+    this.getDeliveries();
+  }
+
+
+
+public getDeliveries(){
+  this.serviceDelivery.getAllDeliveries().subscribe(
+    (response: delivery[]) => {
+      this.ELEMENT_DATA = response;
+      this.dataSource.data = this.ELEMENT_DATA; // Mettez à jour dataSource ici
+      console.log(new MatTableDataSource(this.ELEMENT_DATA));
+      console.log(response);
+      console.log(this.ELEMENT_DATA);
+    },
+    (error: HttpErrorResponse) => {
+      alert(error.message);
+    }
+  );
+}
+
+
 
   displayedColumns: string[] = ['id', 'pickupAddress', 'storageAddress', 'assignedTour','Actions'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
@@ -50,7 +78,6 @@ export class DeliveryComponent {
   
   result: string = '';
 
-  constructor(public dialog: MatDialog) {}
 
   confirmSuppressionDialog(id :number): void {
 
