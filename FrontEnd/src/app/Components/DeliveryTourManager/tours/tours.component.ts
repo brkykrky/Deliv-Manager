@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { deliverer } from '../../../Interfaces/deliverer';
 import { tour } from '../../../Interfaces/tour';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -31,10 +30,7 @@ export class ToursComponent {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  ngOnInit(): void {
-    
-  }
-
+ 
   displayedColumns: string[] = ['id', 'name', 'startDate', 'endDate','assignedDeliveries','Actions'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
 
@@ -60,12 +56,12 @@ export class ToursComponent {
 
   constructor(public dialog: MatDialog) {}
 
-  confirmSuppressionDialog(index :number): void {
+  confirmSuppressionDialog(id :number): void {
 
-    console.log(index);
+    console.log(id);
     const message = `Êtes-vous sûr de vouloir supprimer cette tournée ? `;
 
-    const dialogData = new ConfirmDialogModel("Confirmer votre choix", message);
+    const dialogData = new ConfirmDialogModel("Confirmer votre choix", message,id);
 
     const dialogRef = this.dialog.open(ModalConfirmationComponent, {
       maxWidth: "400px",
@@ -78,13 +74,9 @@ export class ToursComponent {
   }
   
 
-  modifiertournee() {
-    const firstName = "test";
-    const lastName = "test";
-    const isChecked = true;
+  modifiertournee(id :number) {
 
-
-    const dialogData = new EditerDialogModel("Modifier un livreur", firstName,lastName,isChecked);
+    const dialogData = new EditerDialogModel("Modifier un livreur", id);
 
     const dialogRef = this.dialog.open(EditerLivreurComponent, {
       maxWidth: "400px",
@@ -101,7 +93,7 @@ export class ToursComponent {
 Detailtournee() {
   
 
-  const dialogRef = this.dialog.open(DetailsLivreurComponent, {
+  this.dialog.open(DetailsLivreurComponent, {
     maxWidth: "100%",
   });
 }

@@ -3,27 +3,27 @@
     <div class="form-container">
       <mat-form-field class="form-field">
         <mat-label>Nom </mat-label>
-        <input matInput type="text" placeholder="Entrer le nom du livreur" [(ngModel)]="value">
-        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
+        <input matInput type="text" placeholder="Entrer le nom du livreur" [(ngModel)]="firstName">
+        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="firstName" (click)="firstName=''">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
   
       <mat-form-field class="form-field">
         <mat-label>Prénom </mat-label>
-        <input matInput type="text" placeholder="Entrer le Prénom du livreur" [(ngModel)]="value">
-        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
+        <input matInput type="text" placeholder="Entrer le Prénom du livreur" [(ngModel)]="lastName">
+        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="lastName" (click)="lastName=''">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
   
-      <mat-slide-toggle [(ngModel)] = "isChecked">Statut : {{isChecked ? 'Disponible' : 'Pas Disponible'}}</mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)] = "available">Statut : {{available ? 'Disponible' : 'Pas Disponible'}}</mat-slide-toggle>
     </div>
   </mat-dialog-content>
   
     <mat-dialog-actions align="end">
       <button mat-button [mat-dialog-close]="false">Annuler</button>
-      <button mat-button color="primary" >Valider</button>
+      <button mat-button color="primary" (click)="onSubmit()">Valider</button>
     </mat-dialog-actions>
 
-    <!--(click)="onSubmit(queryNameInput.value)"-->
+    <!---->

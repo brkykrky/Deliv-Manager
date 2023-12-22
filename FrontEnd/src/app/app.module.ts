@@ -39,10 +39,36 @@ import { DeliveryEditorComponent } from './Components/DeliveriesManager/delivery
 import { TourCreationComponent } from './Components/DeliveryTourManager/tour-creation/tour-creation.component';
 import { ToureditorComponent } from './Components/DeliveryTourManager/toureditor/toureditor.component';
 import { TourDetailsComponent } from './Components/DeliveryTourManager/tour-details/tour-details.component';
+import { HttpClientModule } from '@angular/common/http';
+import { delivererService } from './services/deliverer.service';
+import { deliveryService } from './services/delivery.service';
+import { DeliveryTourService } from './services/tour.service';
 
 
 
+/*function initializeKeycloak(keycloak: KeycloakService) {
+  
+  console.log('Init keycloak ');
+  return () =>
+    keycloak.init({
+      config: {
+        realm: environment.realm,
+        url: environment.keycloak_url,
+        clientId: environment.client_id,
+        
 
+      },
+      initOptions: {
+        redirectUri: 'http://localhost:4200',
+        onLoad:"login-required",
+        
+       },
+      
+      enableBearerInterceptor:true,
+      
+    });
+   
+}*/
 
 
 
@@ -94,12 +120,23 @@ import { TourDetailsComponent } from './Components/DeliveryTourManager/tour-deta
     MatListModule,
     MatTreeModule,
     ReactiveFormsModule,
-    
+    HttpClientModule,
+    //KeycloakAngularModule
 
     
 
   ],
-  providers: [],
+  providers: [
+    delivererService,
+    deliveryService,
+    DeliveryTourService,
+    /*{
+      provide :APP_INITIALIZER,
+      useFactory:initializeKeycloak,
+      multi:true,
+      deps:[KeycloakService],
+    },*/
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

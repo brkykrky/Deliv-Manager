@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { delivererService } from '../../../services/deliverer.service';
 
 
 @Component({
@@ -10,14 +11,34 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 export class ModalConfirmationComponent {
   title!: string;
   message!: string;
+  id! :number;
 
-  constructor(public dialogRef: MatDialogRef<ModalConfirmationComponent>,@Inject(MAT_DIALOG_DATA) public data: ModalConfirmationComponent) {
+
+  constructor(public serviceDeliverer: delivererService,public dialogRef: MatDialogRef<ModalConfirmationComponent>,@Inject(MAT_DIALOG_DATA) public data: ModalConfirmationComponent) {
     this.title = data.title;
     this.message = data.message;
+    this.id = data.id;
   }
  
   onConfirm(): void {
+
     this.dialogRef.close(true);
+    
+    this.serviceDeliverer.deletedeliverer(this.id).subscribe(
+      () => {
+        // Handle success if needed
+        console.log('Deliverer deleted successfully');
+        window.location.reload();
+
+      },
+      (error) => {
+        // Handle error if needed
+        console.error('Error deleting deliverer', error);
+      }
+    );
+
+
+    
   }
 
   onDismiss(): void {
@@ -26,6 +47,9 @@ export class ModalConfirmationComponent {
 }
 export class ConfirmDialogModel {
 
-  constructor(public title: string, public message: string) {
+  constructor(public title: string, public message: string,public id : number) {
   }
+
+
+  
 }

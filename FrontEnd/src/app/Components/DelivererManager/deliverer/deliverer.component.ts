@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ModalConfirmationComponent } from '../../Shared/modal-confirmation/modal-confirmation.component';
 import { EditerDialogModel, EditerLivreurComponent } from '../editer-livreur/editer-livreur.component';
 import { DetailsLivreurComponent } from '../details-livreur/details-livreur.component';
+import { delivererService } from '../../../services/deliverer.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
  
@@ -19,37 +21,43 @@ import { DetailsLivreurComponent } from '../details-livreur/details-livreur.comp
 })
 export class DelivererComponent implements OnInit {
 
+  constructor(public dialog: MatDialog, public serviceDeliverer : delivererService) {}
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  ELEMENT_DATA: deliverer[] = [
-    {id: 1, firstName: 'a', lastName: "a", creationDate: new Date(),isAvailable:true , deliveryTours:[]},
-    {id: 1, firstName: 'b', lastName: "b", creationDate: new Date(),isAvailable:true , deliveryTours:[]},
-    {id: 1, firstName: 'c', lastName: "c", creationDate: new Date(),isAvailable:true , deliveryTours:[]},
-    {id: 1, firstName: 'd', lastName: "d", creationDate: new Date(),isAvailable:true , deliveryTours:[]},
-    {id: 1, firstName: 'e', lastName: "e", creationDate: new Date(),isAvailable:true , deliveryTours:[]},
-    {id: 1, firstName: 'f', lastName: "f", creationDate: new Date(),isAvailable:false , deliveryTours:[]},
-    {id: 1, firstName: 'g', lastName: "g", creationDate: new Date(),isAvailable:false , deliveryTours:[]},
-    {id: 1, firstName: 'h', lastName: "h", creationDate: new Date(),isAvailable:false , deliveryTours:[]},
-    {id: 1, firstName: 'i', lastName: "i", creationDate: new Date(),isAvailable:false , deliveryTours:[]},
-    {id: 4, firstName: 'j', lastName: "j", creationDate: new Date(),isAvailable:false , deliveryTours:[]},
-    {id: 1, firstName: 'k', lastName: "k", creationDate: new Date(),isAvailable:false , deliveryTours:[]},
-    {id: 1, firstName: 'l', lastName: "l", creationDate: new Date(),isAvailable:false , deliveryTours:[]}
-  ];
+  ELEMENT_DATA: deliverer[] = [];
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
   ngOnInit(): void {
-    
+    this.getDeliverers();
   }
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'creationDate','isAvailable','Actions'];
+  public getDeliverers(): void {
+
+    this.serviceDeliverer.getAlldeliverers().subscribe(
+      (response: deliverer[]) => {
+        this.ELEMENT_DATA = response;
+        this.dataSource.data = this.ELEMENT_DATA; // Mettez à jour dataSource ici
+        console.log(new MatTableDataSource(this.ELEMENT_DATA));
+        console.log(response);
+        console.log(this.ELEMENT_DATA);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'creationDate','available','Actions'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
 
-
+  
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
     // Divisez le filtre en mots
@@ -67,18 +75,17 @@ export class DelivererComponent implements OnInit {
   
     // Mettez à jour la propriété dataSource avec les données filtrées
     this.dataSource = new MatTableDataSource(filteredData);
+    console.log (this.dataSource);
+
+
   }
   
   result: string = '';
 
-  constructor(public dialog: MatDialog) {}
-
-  confirmSuppressionDialog(index :number): void {
-
-    console.log(index);
+  confirmSuppressionDialog(id :number): void {
+    console.log(id);
     const message = `Êtes-vous sûr de vouloir supprimer ce livreur? Cette action est irréversible et entraînera la perte définitive des informations associées à ce livreur`;
-
-    const dialogData = new ConfirmDialogModel("Confirmer votre choix", message);
+    const dialogData = new ConfirmDialogModel("Confirmer votre choix", message,id);
 
     const dialogRef = this.dialog.open(ModalConfirmationComponent, {
       maxWidth: "400px",
@@ -87,17 +94,17 @@ export class DelivererComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
+      console.log(this.result);
     });
+    this.getDeliverers();
+
   }
   
 
-  modifierLivreur() {
-    const firstName = "test";
-    const lastName = "test";
-    const isChecked = true;
+  modifierLivreur(id : number) {
 
-
-    const dialogData = new EditerDialogModel("Modier un livreur", firstName,lastName,isChecked);
+console.log("je sui laaaa :!!!!")
+    const dialogData = new EditerDialogModel("Modifier un livreur",id);
 
     const dialogRef = this.dialog.open(EditerLivreurComponent, {
       maxWidth: "400px",
@@ -111,12 +118,13 @@ export class DelivererComponent implements OnInit {
 }
 
 //--------------------------------------------------------------------------------
-DetailLivreur() {
-  
-
-  const dialogRef = this.dialog.open(DetailsLivreurComponent, {
-    maxWidth: "100%",
+DetailLivreur(id : number) {
+  this.dialog.open(DetailsLivreurComponent, {
+    maxWidth: "400px",
+    data: id
   });
+
+
 }
   
 }

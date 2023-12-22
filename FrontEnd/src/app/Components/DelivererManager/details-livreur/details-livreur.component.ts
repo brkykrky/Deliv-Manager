@@ -44,4 +44,5 @@ treeControl = new NestedTreeControl<FoodNode>(node => node.children);
   }
 
   hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+  
 }

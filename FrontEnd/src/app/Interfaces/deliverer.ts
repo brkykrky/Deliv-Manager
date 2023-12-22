@@ -2,8 +2,8 @@ import { tour } from "./tour";
 
 export interface deliverer {
     id : number,
-    firstName : String,
-    lastName : String,
+    firstName : string,
+    lastName : string,
     isAvailable : boolean,
     creationDate : Date , 
     deliveryTours : tour []

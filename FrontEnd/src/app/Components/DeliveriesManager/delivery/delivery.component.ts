@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { deliverer } from '../../../Interfaces/deliverer';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -31,9 +30,6 @@ export class DeliveryComponent {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  ngOnInit(): void {
-    
-  }
 
   displayedColumns: string[] = ['id', 'pickupAddress', 'storageAddress', 'assignedTour','Actions'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
@@ -60,12 +56,12 @@ export class DeliveryComponent {
 
   constructor(public dialog: MatDialog) {}
 
-  confirmSuppressionDialog(index :number): void {
+  confirmSuppressionDialog(id :number): void {
 
-    console.log(index);
+    console.log(id);
     const message = `Êtes-vous sûr de vouloir supprimer cette livraison ? `;
 
-    const dialogData = new ConfirmDialogModel("Confirmer votre choix", message);
+    const dialogData = new ConfirmDialogModel("Confirmer votre choix", message,id);
 
     const dialogRef = this.dialog.open(ModalConfirmationComponent, {
       maxWidth: "400px",
@@ -78,13 +74,10 @@ export class DeliveryComponent {
   }
   
 
-  modifierlivraison() {
-    const firstName = "test";
-    const lastName = "test";
-    const isChecked = true;
+  modifierlivraison(id : number) {
 
 
-    const dialogData = new EditerDialogModel("Modier un livreur", firstName,lastName,isChecked);
+    const dialogData = new EditerDialogModel("Modier un livreur",id);
 
     const dialogRef = this.dialog.open(EditerLivreurComponent, {
       maxWidth: "400px",
@@ -101,7 +94,7 @@ export class DeliveryComponent {
 Detaillivraison() {
   
 
-  const dialogRef = this.dialog.open(DetailsLivreurComponent, {
+this.dialog.open(DetailsLivreurComponent, {
     maxWidth: "100%",
   });
 }
