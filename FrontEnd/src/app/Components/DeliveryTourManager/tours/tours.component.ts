@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { tour } from '../../../Interfaces/tour';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DetailsLivreurComponent } from '../../DelivererManager/details-livreur/details-livreur.component';
 import { EditerDialogModel, EditerLivreurComponent } from '../../DelivererManager/editer-livreur/editer-livreur.component';
 import { ConfirmDialogModel, ModalConfirmationComponent } from '../../Shared/modal-confirmation/modal-confirmation.component';
+import { DeliveryTourService } from '../../../services/tour.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -15,25 +17,37 @@ import { ConfirmDialogModel, ModalConfirmationComponent } from '../../Shared/mod
   templateUrl: './tours.component.html',
   styleUrl: './tours.component.css'
 })
-export class ToursComponent {
+export class ToursComponent implements OnInit{
  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  ELEMENT_DATA: tour[] = [
-    {id: 1, name : "A tour",startDate : new Date(), endDate :new Date(),assignedDeliverer:null,assignedDeliveries:[]},
-    {id: 2, name : "B tour",startDate : new Date(), endDate :new Date(),assignedDeliverer:null,assignedDeliveries:[]},
-    {id: 3, name : "C tour",startDate : new Date(), endDate :new Date(),assignedDeliverer:null,assignedDeliveries:[]}
-  ]
+  ELEMENT_DATA: tour[] = []
+  constructor(public dialog: MatDialog,public serviceTour : DeliveryTourService) {}
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
- 
+ ngOnInit(): void {
+   this.getTours();
+ }
   displayedColumns: string[] = ['id', 'name', 'startDate', 'endDate','assignedDeliveries','Actions'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
 
+
+  public getTours(){
+    this.serviceTour.getAlltours().subscribe(
+      (response: tour[]) => {
+        this.ELEMENT_DATA = response;
+        this.dataSource.data = this.ELEMENT_DATA; // Mettez à jour dataSource ici
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
@@ -54,7 +68,6 @@ export class ToursComponent {
   
   result: string = '';
 
-  constructor(public dialog: MatDialog) {}
 
   confirmSuppressionDialog(id :number): void {
 

@@ -13,49 +13,49 @@ export class DeliveryTourService {
   constructor(private http: HttpClient) { }
 
   createTour(tour: tour): Observable<tour> {
-    return this.http.post<tour>(`${environment.apiUrl}`, tour)
+    return this.http.post<tour>(`${environment.apiUrl}/delivery-tour`, tour)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   gettour(id: number): Observable<tour> {
-    return this.http.get<tour>(`${environment.apiUrl}/${id}`)
+    return this.http.get<tour>(`${environment.apiUrl}/delivery-tour/${id}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getAlltours(): Observable<tour[]> {
-    return this.http.get<tour[]>(`${environment.apiUrl}/all`)
+    return this.http.get<tour[]>(`${environment.apiUrl}/delivery-tour/all`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   updatetour(id: number, updatedtour: tour): Observable<tour> {
-    return this.http.patch<tour>(`${environment.apiUrl}/${id}`, updatedtour)
+    return this.http.patch<tour>(`${environment.apiUrl}/delivery-tour/${id}`, updatedtour)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   searchtours(searchCriteria: tour): Observable<tour[]> {
-    return this.http.post<tour[]>(`${environment.apiUrl}/search`, searchCriteria)
+    return this.http.post<tour[]>(`${environment.apiUrl}/delivery-tour/search`, searchCriteria)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   assignDeliveryTotour(id: number, addDeliveryDTO: tour): Observable<tour> {
-    return this.http.post<tour>(`${environment.apiUrl}/${id}/assign-delivery`, addDeliveryDTO)
+    return this.http.post<tour>(`${environment.apiUrl}/delivery-tour/${id}/assign-delivery`, addDeliveryDTO)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   searchtoursByDate(searchCriteria: tour): Observable<tour[]> {
-    return this.http.post<tour[]>(`${environment.apiUrl}/search-by-date`, searchCriteria)
+    return this.http.post<tour[]>(`${environment.apiUrl}/delivery-tour/search-by-date`, searchCriteria)
       .pipe(
         catchError(this.handleError)
       );
