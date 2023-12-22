@@ -20,11 +20,7 @@ export class DeliveryComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  ELEMENT_DATA: delivery[] = [
-    {id: 1, pickupAddress : "Ain temouchent , Algérie",storageAddress : "Rouen , france ", assignedTour :null},
-    {id: 2, pickupAddress : "Bin temouchent , Algérie",storageAddress : "Uouen , france ", assignedTour :null},
-    {id: 3, pickupAddress : "Cin temouchent , Algérie",storageAddress : "Zouen , france ", assignedTour :null}
-  ];
+  ELEMENT_DATA: delivery[] = []
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
