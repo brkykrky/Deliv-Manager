@@ -4,8 +4,8 @@ import { delivery } from "./delivery";
 export interface tour {
     id :number ,
     name : string , 
-    startDate : Date , 
-    endDate : Date,
+    startDate : string |undefined , 
+    endDate : string |undefined,
     assignedDeliverer : deliverer | null,
     assignedDeliveries : delivery [] 
 }

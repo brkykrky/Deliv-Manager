@@ -3,8 +3,8 @@
     <div class="form-container">
       <mat-form-field class="form-field">
         <mat-label>Nom </mat-label>
-        <input matInput type="text" placeholder="Entrer le nom de la tournée" [(ngModel)]="value">
-        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
+        <input matInput type="text" placeholder="Entrer le nom de la tournée" [(ngModel)]="nom">
+        <button matSuffix mat-icon-button aria-label="Clear" *ngIf="nom" (click)="nom=''">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
@@ -12,7 +12,7 @@
 
       <mat-form-field>
         <mat-label>Entre deux dates</mat-label>
-        <mat-date-range-input  [rangePicker]="dateRangePicker">
+        <mat-date-range-input   [formGroup]="range" [rangePicker]="dateRangePicker">
           <input matStartDate formControlName="start" placeholder="Date de début">
           <input matEndDate formControlName="end" placeholder="Date de fin">
         </mat-date-range-input>
@@ -28,7 +28,6 @@
   
     <mat-dialog-actions align="end">
       <button mat-button [mat-dialog-close]="false">Annuler</button>
-      <button mat-button color="primary" >Valider</button>
+      <button mat-button color="primary"  (click)="onSubmit()" >Valider</button>
     </mat-dialog-actions>
 
-    <!--(click)="onSubmit(queryNameInput.value)"-->
