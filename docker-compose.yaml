@@ -78,6 +78,9 @@ services:
       container_name: frontend
       build:
         context: ./FrontEnd/.
+      environment:
+        - keycloak_url=http://keycloak:8080/
+        - apiUrl=http://backend:8080/
       networks:
         - delivmanager
       ports:
