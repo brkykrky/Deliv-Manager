@@ -7,7 +7,7 @@ on:
       - main
       
     paths: 
-      - client/**
+      - FrontEnd/**
 
 
 jobs:
