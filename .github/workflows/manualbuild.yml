@@ -8,17 +8,7 @@
 
 name: Backend - CI
 
-on:
-  push:
-    branches:
-      - develop
-      - main
-      
-    paths: 
-      - .mvn/**
-      - src/**
-      - pom.xml
-      - mvnw
+on: workflow_dispatch
 
 jobs:
   lint:
